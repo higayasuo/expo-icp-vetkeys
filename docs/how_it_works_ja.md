@@ -1,20 +1,11 @@
 # How it works
 このドキュメントで、Expoアプリで、Internet Identityで認証し、ICPのBackendに接続する方法を学習します。
-中身が結構難しいので、最初に自然言語で内容を説明し、その後、コードを解説します。
 
 英語版は[こちら](how_it_works.md)です。
 
 ## Internet Identityとは
 
-Internet Identityは、Internet Computer上のサービスを利用するためのアカウントシステムです。従来のGoogleアカウントやApple IDに相当するものですが、以下のメリットがあります：
-
-- プラットフォーム企業による個人情報の収集・追跡がありません
-- Web3.0時代に適した分散型のアカウントシステムです
-- 生体認証(パスキー)による安全なログインが可能です
-
-これにより、従来の中央集権的なアカウントシステムの問題点を解決し、より安全でプライバシーを重視したWeb3.0時代のアカウントサービスを実現しています。
-
-Internet IdentityのFrontendは、[Webアプリ](https://identity.ic0.app/)として提供されています。
+Internet Identityは、Internet Computer上のサービスを利用するためのアカウントシステムです。従来のGoogleアカウントやApple IDに相当するものです。
 
 ## ExpoでInternet Identityを使うときの工夫
 
@@ -37,79 +28,28 @@ Internet IdentityのFrontendは、[Webアプリ](https://identity.ic0.app/)と�
   - Expoアプリから受け取った公開鍵を使用
   - Internet Identity認証を実行
   - 認証成功後、DelegationChainを取得
-  - DelegationChainをExpoアプリにリダイレクトで返却
+  - DelegationChainをExpoアプリにリダイレクト(Native)/postMessage(Web)で返却
 
 3. Expoアプリ側での認証完了処理:
   - SignIdentityとDelegationChainからDelegationIdentityを生成
 
-#### DelegationChainの特徴
-- ユーザーの公開鍵が含まれる
-- ユーザーからアプリへの署名権限委譲の証明書が含まれる
-
-#### 通信の仕組み
-- 外部ブラウザからExpoアプリへの通信はリダイレクト(Custom URL)を使用
-- 認証情報の転送はDelegationChainのみに限定（秘密鍵は転送しない）
-
-### DelegationIdentityの構成と仕組み
-
-DelegationIdentityは、アプリがトランザクションに署名し、トランザクションの実行者はユーザーということを実現するための仕組みです。
-
-- 構成要素:
-  - SignIdentity: 秘密鍵を保持し、トランザクション署名機能を提供
-  - DelegationChain: ユーザーからアプリへの署名権限委譲
-
-#### トランザクション処理フロー
-
-1. アプリ:
-  - トランザクションに署名
-  - ICPにトランザクションを送信
-
-2. ICPによるトランザクション検証プロセス:
-  - DelegationChainの証明書の検証
-  - DelegationChainからアプリの公開鍵を取得
-  - アプリの公開鍵によるトランザクションの署名検証
-
-3. トランザクション実行:
-  - 全検証成功後、正当なユーザーの操作としてトランザクションを実行
-
 ### DelegationIdentityの保存
 
 - 保存する要素:
-  - SignIdentity: セキュアなストレージ（expo-secure-store）に保存
-    - 理由: 秘密鍵を持つため
-  - DelegationChain: 通常のストレージ（@react-native-async-storage/async-storage）に保存
-    - 理由: 機密情報を含まないため
+  - SignIdentity:
+    - Nativeの場合、セキュアなストレージ（expo-secure-store）に保存
+    - Webの場合、sessionStorageに保存
+  - DelegationChain:
+    - Nativeの場合、通常のストレージ（@react-native-async-storage/async-storage）に保存
+    - Webの場合、sessionStorageに保存
 
 #### 再起動時のDelegationIdentity復元手順
 
 1. ストレージからの読み込み:
-  - セキュアなストレージからSignIdentityを読み込む
-  - 通常のストレージからDelegationChainを読み込む
+  - SignIdentityとDelegationChainを読み込む
 
 2. DelegationIdentityの生成:
   - 読み込んだSignIdentityとDelegationChainからDelegationIdentityを生成
-
-### Backendに接続するActor
-
-Backendに接続するActorは、DelegationIdentityを使用して以下のように動作します：
-
-#### 処理の流れ
-
-1. Actorの動作:
-  - Backendのメソッド呼び出しを受け取る
-  - DelegationIdentityを使用してトランザクションに署名
-  - 署名済みトランザクションをICPに送信
-
-2. ICPでの処理:
-  - DelegationChainの証明書を検証
-  - DelegationChainからアプリの公開鍵を取得
-  - アプリの公開鍵でトランザクションの署名を検証
-  - 検証成功後、ユーザーの操作としてトランザクションを実行
-
-#### 重要なポイント
-
-- アプリがトランザクションに署名し、実行はユーザーの操作として処理される
-- DelegationChainによって、アプリへの署名権限委譲が正当であることを証明
 
 ## コードで理解しよう - Native(iOS/Android)編
 

@@ -1,20 +1,11 @@
 # How it works
 This document explains how to authenticate with Internet Identity in an Expo app and connect to the Backend of ICP.
-Since the content is quite complex, we will first understand the concepts in natural language, and then explain the code.
 
 The Japanese version is available [here](how_it_works_ja.md).
 
 ## What is Internet Identity
 
-Internet Identity is an account system for accessing services on the Internet Computer. While it is equivalent to traditional Google accounts and Apple IDs, it offers the following benefits:
-
-- No collection or tracking of personal information by platform companies
-- A decentralized account system suitable for the Web3.0 era
-- Secure login using biometric authentication (passkeys)
-
-By addressing the issues of conventional centralized account systems, it realizes a Web3.0-era account service that is more secure and privacy-focused.
-
-The Internet Identity Frontend is provided as a [web application](https://identity.ic0.app/).
+Internet Identity is an account system for accessing services on the Internet Computer. While it is equivalent to traditional Google accounts and Apple IDs.
 
 ## Tips for Using Internet Identity with Expo
 
@@ -37,79 +28,28 @@ Authentication flow is implemented by separating authentication process to Web F
   - Use public key received from Expo app
   - Execute Internet Identity authentication
   - Get DelegationChain after successful authentication
-  - Return DelegationChain to Expo app via redirect
+  - Return DelegationChain to Expo app via redirect(Native) or postMessage(Web)
 
 3. Authentication Completion Process in Expo App:
   - Generate DelegationIdentity by combining SignIdentity and DelegationChain
 
-#### DelegationChain Characteristics
-- Contains user's public key
-- Contains certificate for signature authority delegation from user to app
-
-#### Communication Mechanism
-- Communication from external browser to Expo app uses redirect(Custom URL)
-- Authentication information transfer limited to DelegationChain only (private key not transferred)
-
-### Structure and Mechanism of DelegationIdentity
-
-DelegationIdentity is a mechanism that allows apps to sign transactions while maintaining the user as the transaction owner.
-
-#### Components
-- SignIdentity: Holds the private key and provides transaction signing functionality
-- DelegationChain: Delegation of signing authority from users to applications
-
-#### Transaction Processing Flow
-
-1. Application Side:
-  - Performs transaction signing
-  - Sends transaction to ICP
-
-2. ICP Verification Process:
-  - Verifies the certificates in DelegationChain
-  - Retrieves app's public key from DelegationChain
-  - Verifies transaction signature using app's public key
-
-3. Transaction Execution:
-  - After all verifications succeed, executes the transaction as a legitimate user operation
-
 ### Storing DelegationIdentity
 
 - Elements to store:
-  - SignIdentity: Store in secure storage (expo-secure-store)
-    - Reason: Contains private key
-  - DelegationChain: Store in regular storage (@react-native-async-storage/async-storage)
-    - Reason: Contains no confidential information
+  - SignIdentity:
+    - For Native, store in secure storage (expo-secure-store)
+    - For Web, store in sessionStorage
+  - DelegationChain:
+    - For Native, store in regular storage (@react-native-async-storage/async-storage)
+    - For Web, store in sessionStorage
 
-#### DelegationIdentity Recovery Process on Restart
+#### Procedure for Restoring DelegationIdentity on Restart
 
-1. Loading from Storage:
-  - Load SignIdentity from secure storage
-  - Load DelegationChain from regular storage
+1. Loading from storage:
+  - Load SignIdentity and DelegationChain
 
-2. DelegationIdentity Generation:
-  - Create DelegationIdentity by combining the loaded SignIdentity and DelegationChain
-
-### Actor Connecting to Backend
-
-An Actor connecting to the Backend operates with DelegationIdentity as follows:
-
-#### Process Flow
-
-1. Actor Operation:
-  - Receives Backend method calls
-  - Signs transactions using DelegationIdentity
-  - Sends signed transactions to ICP
-
-2. ICP Processing:
-  - Verifies DelegationChain certificates
-  - Retrieves delegated app's public key from DelegationChain
-  - Verifies transaction signature using app's public key
-  - After verification, executes transaction as user operation
-
-#### Key Points
-
-- App signs transactions, but execution is processed as user operation
-- DelegationChain proves legitimate delegation of signing authority to the app
+2. Generating DelegationIdentity:
+  - Generate DelegationIdentity from the loaded SignIdentity and DelegationChain
 
 ## Understanding through Code - Native (iOS/Android)
 

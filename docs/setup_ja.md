@@ -45,19 +45,14 @@ mkcert -CAROOT
 - 作成された鍵ファイルは絶対に共有しない
 - Androidは、機種によって、ルート証明書のインストール方法が異なる場合がある
 
-## tigedのインストール
-tigedは、GitHubリポジトリの一部分だけを簡単にダウンロードできる便利なツールです。
-下記のコマンドを実行して、tigedをインストールします：
+## プロジェクトのダウンロード
+以下のコマンドで、プロジェクトをダウンロードし、プロジェクトフォルダに移動します：
 ```bash
-npm install -g tiged
+git clone https://github.com/higayasuo/<REPOSITORY_NAME>
+cd <RESPOSITORY_NAME>
 ```
 
-## expo-starterプロジェクトのダウンロード
-以下のコマンドで、expo-starterプロジェクトをダウンロードし、プロジェクトフォルダに移動します：
-```bash
-tiged higayasuo/icp-examples/expo-starter expo-starter
-cd expo-starter
-```
+<REPOSITORY_NAME>は、このプロジェクトのリポジトリ名で置き換えてください。
 
 ## RustとICPの開発ツールのセットアップ
 RustとICPの開発ツールをセットアップする手順を説明します。
@@ -182,7 +177,7 @@ npm run dfx:start
 npm run dfx:deploy
 ```
 このコマンドは下記のことをしています：
-1. 全てのCanister（internet-identity, ii-integration, expo-starter-frontend, expo-starter-backend）をビルドします
+1. 全てのCanister（internet-identity, ii-integration, frontend, backend）をビルドします
 2. ビルドしたCanisterをローカルreplicaにインストールします
 
 **重要な注意点**
@@ -326,41 +321,13 @@ npm run frontend:start
 - メインネットのInternet Identityは動作します
 - Expo Goでのテストは、iOSで行ってください
 
-## 稼働確認
-Expo Goを使って実際にアプリを使ってみましょう。
+## Internet Identityの注意点
 
-1. Expo開発サーバーを起動したときに表示されたQRコードをiOSのカメラで読み取り、Expoアプリを起動します。
-![QRコード](./images/qrcode.png)
-
-2. Expoアプリのログインボタンをタップし、ii-integrationのWebアプリを起動します。
-![アプリのログイン](./images/app-login.png)
-
-3. ii-integrationのログインボタンをタップし、Internet Identityを起動します。
-![ii-integrationのログイン](./images/ii-integration-login.png)
-
-4. Internet Identity作成ボタンをタップし、Internet Identityを作成します。
-![Internet Identityの作成](./images/create-internet-identity.png)
-
-5. Internet Identityが作成されました。
-開発環境では、10000で作成されます。この数字は、Internet Identityを表していて、本番環境では、覚えておく必要があります。
-I saved it, continueボタンをクリックすると、Expoアプリに戻ります。
-![Created Internet Identity](./images/created-internet-identity.png)
-
-6. Expoアプリから、Backend Canisterのwhoamiメソッドを呼び出しましょう。whoamiボタンをタップします。すると、あなたのInternet Identity(ログインアカウント)のテキスト表現を見ることができます。
-他のブロックチェーンのアドレスに相当します。
-![whoami](./images/whoami.png)
-![whoamiの呼び出し結果](./images/whoami-result.png)
-
-7. ログアウトしてから再度ログインしてください。
-Choose Identityのページが表示されます。先ほど作成した10000を選べば、再ログインできます。
-![Choose Identity](./images/choose-internet-identity.png)
-
-8. Choose IdentityでIdentityを選んだときに、Unknown Internet Identityのエラーが出る場合があります。
+Choose IdentityでIdentityを選んだときに、Unknown Internet Identityのエラーが出る場合があります。
 これは、Identityを作成後に、ローカルInternet Identityを再デプロイしたときに起こります。
 ブラウザは、Identityを覚えていますが、ローカルInternet IdentityはIdentityを忘れてしまっているためです。
 ![Unknown Internet Identity](./images/unknown-internet-identity.png)
 
-9. このような場合は、Identityの下に表示されているMore optionsをタップしてください。左下のCreate Newボタンをタップしましょう。10000のIdentityを再作成できます。
+このような場合は、Identityの下に表示されているMore optionsをタップしてください。左下のCreate Newボタンをタップしましょう。10000のIdentityを再作成できます。
 ![Create new Identity](./images/create-new.png)
-![Created Internet Identity](./images/created-internet-identity.png)
 

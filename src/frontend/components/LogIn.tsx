@@ -1,23 +1,23 @@
-import React from 'react';
+import { useState } from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { buttonTextStyles } from './styles';
-
-interface LogInProps {
-  onLogin: () => Promise<void>;
-}
+import { useIIIntegrationContext } from 'expo-ii-integration';
 
 /**
  * Component that handles the login functionality
  */
-export const LogIn = ({ onLogin }: LogInProps) => {
-  const [busy, setBusy] = React.useState(false);
+export const LogIn = () => {
+  const { login } = useIIIntegrationContext();
+  const [busy, setBusy] = useState(false);
 
-  function handlePress() {
+  const handlePress = async () => {
     setBusy(true);
-    onLogin().finally(() => {
+    try {
+      await login();
+    } finally {
       setBusy(false);
-    });
-  }
+    }
+  };
 
   return (
     <Pressable

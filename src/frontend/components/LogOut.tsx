@@ -1,16 +1,14 @@
-import React from 'react';
 import { Pressable, Text, StyleSheet } from 'react-native';
 import { buttonTextStyles } from './styles';
-
-interface LogOutProps {
-  onLogout: () => Promise<void>;
-}
+import { useIIIntegrationContext } from 'expo-ii-integration';
+import { useState } from 'react';
 
 /**
  * Component that handles the logout functionality
  */
-export const LogOut = ({ onLogout }: LogOutProps) => {
-  const [busy, setBusy] = React.useState(false);
+export const LogOut = () => {
+  const { logout } = useIIIntegrationContext();
+  const [busy, setBusy] = useState(false);
 
   return (
     <Pressable
@@ -21,7 +19,7 @@ export const LogOut = ({ onLogout }: LogOutProps) => {
       onPress={async () => {
         setBusy(true);
         try {
-          await onLogout();
+          await logout();
         } finally {
           setBusy(false);
         }

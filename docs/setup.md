@@ -45,19 +45,14 @@ mkcert -CAROOT
 - Never share generated key files
 - Root certificate installation process may vary depending on Android device model
 
-## Installing tiged
-tiged is a useful tool that allows you to easily download specific parts of GitHub repositories.
-Execute the following command to install tiged:
+## Downloading this project
+Download the project and move to the project folder with the following commands:
 ```bash
-npm install -g tiged
+git clone https://github.com/higayasuo/<REPOSITORY_NAME>
+cd <RESPOSITORY_NAME>
 ```
 
-## Downloading expo-starter project
-Download the expo-starter project and move to the project folder with the following commands:
-```bash
-tiged higayasuo/icp-examples/expo-starter expo-starter
-cd expo-starter
-```
+Replace `<REPOSITORY_NAME>` with this project's repository name.
 
 ## Setting Up Rust and ICP Development Tools
 
@@ -320,40 +315,11 @@ This command performs the following:
 - Mainnet Internet Identity works
 - Please perform Expo Go testing on iOS
 
-## Operation Verification
-Let's try using the app with Expo Go.
-
-1. Launch Expo Go by scanning the QR code displayed when starting the Expo development server with your iOS camera.
-![QR code](./images/qrcode.png)
-
-2. Tap the login button in the Expo app to launch the ii-integration web app.
-![App login](./images/app-login.png)
-
-3. Tap the login button in ii-integration to launch Internet Identity.
-![ii-integration login](./images/ii-integration-login.png)
-
-4. Tap the Internet Identity creation button to create your Internet Identity.
-![Create Internet Identity](./images/create-internet-identity.png)
-
-5. Internet Identity has been created.
-In the development environment, it will be created with 10000. This number represents your Internet Identity and needs to be remembered in the production environment.
-Click "I saved it, continue" button to return to the Expo app.
-![Created Internet Identity](./images/created-internet-identity.png)
-
-6. Let's call the whoami method from the Backend Canister in the Expo app. Tap the whoami button. You'll see the text representation of your Internet Identity (login account).
-This is equivalent to addresses in other blockchains.
-![whoami](./images/whoami.png)
-![whoami call result](./images/whoami-result.png)
-
-7. Log out and log in again.
-The Choose Identity page will be displayed. You can log in again by selecting 10000 that you created earlier.
-![Choose Identity](./images/choose-internet-identity.png)
-
-8. When selecting an Identity on the Choose Identity page, you may get an Unknown Internet Identity error.
+## Key Points about Internet Identity
+When selecting an Identity on the Choose Identity page, you may get an Unknown Internet Identity error.
 This occurs when the local Internet Identity is redeployed after creating an Identity.
 The browser remembers the Identity, but the local Internet Identity has forgotten it.
 ![Unknown Internet Identity](./images/unknown-internet-identity.png)
 
-9. In such cases, tap More options displayed under Identity. Tap the Create New button in the bottom left. You can recreate Identity 10000.
+In such cases, tap More options displayed under Identity. Tap the Create New button in the bottom left. You can recreate Identity 10000.
 ![Create new Identity](./images/create-new.png)
-![Created Internet Identity](./images/created-internet-identity.png)

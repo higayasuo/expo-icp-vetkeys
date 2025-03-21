@@ -17,7 +17,7 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
-  const { identity, login, logout, pathWhenLogin, clearPathWhenLogin } =
+  const { identity, pathWhenLogin, clearPathWhenLogin } =
     useIIIntegrationContext();
   const pathname = usePathname();
   // const path = pathWhenLogin ?? pathname;
@@ -47,8 +47,7 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: '#007AFF',
-        headerRight: () =>
-          identity ? <LogOut onLogout={logout} /> : <LogIn onLogin={login} />,
+        headerRight: () => (identity ? <LogOut /> : <LogIn />),
         headerStyle: {
           height: 110,
         },
