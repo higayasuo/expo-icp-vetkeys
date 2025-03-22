@@ -33,9 +33,6 @@ export const WhoAmI = () => {
   const whoami = async () => {
     const backend = createBackend(identity);
 
-    if (!backend) {
-      throw new Error('backend is not ready');
-    }
     try {
       return await backend.whoami();
     } catch (error) {
