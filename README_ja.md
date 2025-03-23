@@ -1,6 +1,6 @@
-# `expo-icp`
+# `expo-icp-vetkeys`
 
-`expo-icp`プロジェクトへようこそ。
+`expo-icp-keys`プロジェクトへようこそ。
 英語版は[こちら](README.md)です。
 
 ## デモ

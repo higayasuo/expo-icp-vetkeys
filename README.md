@@ -1,6 +1,6 @@
-# `expo-icp`
+# `expo-icp-vetkeys`
 
-Welcome to the `expo-icp` project.
+Welcome to the `expo-icp-keys` project.
 The Japanese version is available [here](README_ja.md).
 
 ## Demo

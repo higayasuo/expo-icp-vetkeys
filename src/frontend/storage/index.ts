@@ -8,6 +8,7 @@ import {
   NativeRegularStorage,
 } from 'expo-storage-universal-native';
 import { AppKeyStorage, DelegationStorage } from 'expo-ii-integration';
+import { AesRawKeyStorage } from 'expo-aes-vetkeys';
 
 console.log('Platform.OS', Platform.OS);
 
@@ -19,3 +20,5 @@ export const regularStorage =
 
 export const appKeyStorage = new AppKeyStorage(secureStorage);
 export const delegationStorage = new DelegationStorage(regularStorage);
+
+export const aesRawKeyStorage = new AesRawKeyStorage(secureStorage);

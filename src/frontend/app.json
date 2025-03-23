@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "expo-icp",
-    "slug": "expo-icp",
+    "name": "expo-icp-vetkeys",
+    "slug": "expo-icp-vetkeys",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "expo-icp",
+    "scheme": "expo-icp-vetkeys",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.example.icpexpo",
+      "bundleIdentifier": "com.example.icp-vetkeys",
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true,
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.example.icpexpo"
+      "package": "com.example.icp-vetkeys"
     },
     "web": {
       "bundler": "metro",
