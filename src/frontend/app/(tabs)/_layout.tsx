@@ -61,13 +61,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
         }}
       />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Encryption',
-          tabBarIcon: ({ color }) => <TabBarIcon name="lock" color={color} />,
-        }}
-      />
     </Tabs>
   );
 }

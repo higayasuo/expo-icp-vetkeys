@@ -10,6 +10,7 @@ import { View, ActivityIndicator } from 'react-native';
 
 import { useError } from '@/contexts/ErrorContext';
 import { LOCAL_IP_ADDRESS, ENV_VARS } from '@/constants';
+import { delegationStorage, appKeyStorage } from '@/storage';
 //import { useAesKey, AesProcessingView } from '@/aes';
 
 export const unstable_settings = {
@@ -48,17 +49,17 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const auth = useIIIntegration({
+  const iiIntegration = useIIIntegration({
     localIPAddress: LOCAL_IP_ADDRESS,
     dfxNetwork: ENV_VARS.DFX_NETWORK,
     iiIntegrationCanisterId: ENV_VARS.CANISTER_ID_II_INTEGRATION,
     iiCanisterId: ENV_VARS.CANISTER_ID_INTERNET_IDENTITY,
+    appKeyStorage,
+    delegationStorage,
   });
 
-  const { identity, authError, isReady } = auth;
-  //const { isProcessingAes, aesError } = useAesKey({ identity });
+  const { authError, isReady } = iiIntegration;
   const { showError } = useError();
-  //const error = authError || aesError;
 
   useEffect(() => {
     if (authError) {
@@ -69,7 +70,7 @@ function RootLayoutNav() {
   // Memoize the main content view to prevent recreation on each render
   const mainContentView = useMemo(
     () => (
-      <IIIntegrationProvider value={auth}>
+      <IIIntegrationProvider value={iiIntegration}>
         <Stack
           screenOptions={{
             headerShown: false,
@@ -79,16 +80,12 @@ function RootLayoutNav() {
         </Stack>
       </IIIntegrationProvider>
     ),
-    [auth],
+    [iiIntegration],
   );
 
   if (!isReady) {
     return <LoadingView />;
   }
-
-  // if (isProcessingAes) {
-  //   return <AesProcessingView />;
-  // }
 
   return mainContentView;
 }
