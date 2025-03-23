@@ -5,7 +5,7 @@
 
 ## デモ
 
-[https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/](https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/)
+<a href="https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/" target="_blank" rel="noopener noreferrer">https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/</a>
 
 ## サービスコンセプト
 
