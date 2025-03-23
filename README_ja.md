@@ -8,6 +8,14 @@
 <a href="https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/?v=1" target="_blank" rel="noopener noreferrer">https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/</a>
 (Ctrl+Click or ⌘+Click to open in new tab)
 
+### スクリーンショット
+
+- iPhone
+  ![iPhone](./docs/images/iphone.jpeg)
+
+- Xperia
+  ![Xperia](./docs/images/xperia.png)
+
 ## サービスコンセプト
 
 Expo アプリで Internet Identity を数行のコードを書くだけで簡単に使える、マルチプラットフォーム(iOS/Android/Web)認証ソリューションです。これまでほとんど存在していなかった ICP のスマホネイティブアプリを簡単に作成できるテンプレートも提供しています。
