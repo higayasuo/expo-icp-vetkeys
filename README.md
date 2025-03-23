@@ -6,6 +6,7 @@ The Japanese version is available [here](README_ja.md).
 ## Demo
 
 <a href="https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/?v=1" target="_blank" rel="noopener noreferrer">https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/</a>
+(Ctrl+Click or ⌘+Click to open in new tab)
 
 ## Service Concept
 
