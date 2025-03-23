@@ -3,9 +3,13 @@
 Welcome to the `expo-icp` project.
 The Japanese version is available [here](README_ja.md).
 
+## Demo
+
+[https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/](https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/)
+
 ## Service Concept
 
-A multi-platform authentication solution that makes Internet Identity easy to use in Expo apps with just a few lines of code. This project also provides a template for creating smartphone native apps for ICP, which have been rare until now.
+A multi-platform(iOS/Android/Web) authentication solution that makes Internet Identity easy to use in Expo apps with just a few lines of code. This project also provides a template for creating smartphone native apps for ICP, which have been rare until now.
 
 ## Target Users
 

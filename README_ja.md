@@ -3,9 +3,13 @@
 `expo-icp`プロジェクトへようこそ。
 英語版は[こちら](README.md)です。
 
+## デモ
+
+[https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/](https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/)
+
 ## サービスコンセプト
 
-Expo アプリで Internet Identity を数行のコードを書くだけで簡単に使える、マルチプラットフォーム認証ソリューションです。これまでほとんど存在していなかった ICP のスマホネイティブアプリを簡単に作成できるテンプレートも提供しています。
+Expo アプリで Internet Identity を数行のコードを書くだけで簡単に使える、マルチプラットフォーム(iOS/Android/Web)認証ソリューションです。これまでほとんど存在していなかった ICP のスマホネイティブアプリを簡単に作成できるテンプレートも提供しています。
 
 ## 利用ユーザ想定（ターゲット）
 
