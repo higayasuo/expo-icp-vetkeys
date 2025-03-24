@@ -1,11 +1,11 @@
 # `expo-icp-vetkeys`
 
-Welcome to the `expo-icp-keys` project.
+Welcome to the `expo-icp-vetkeys` project.
 The Japanese version is available [here](README_ja.md).
 
 ## Demo
 
-<a href="https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/?v=1" target="_blank" rel="noopener noreferrer">https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/</a>
+<a href="https://fpdhi-rqaaa-aaaag-at7ra-cai.icp0.io/" target="_blank" rel="noopener noreferrer">https://fpdhi-rqaaa-aaaag-at7ra-cai.icp0.io/</a>
 (Ctrl+Click or ⌘+Click to open in new tab)
 
 ### Screen shots
@@ -18,24 +18,48 @@ The Japanese version is available [here](README_ja.md).
 
 ## Service Concept
 
-A multi-platform(iOS/Android/Web) authentication solution that makes Internet Identity easy to use in Expo apps with just a few lines of code. This project also provides a template for creating smartphone native apps for ICP, which have been rare until now.
+When you authenticate with Internet Identity in an Expo app, you can encrypt/decrypt data without managing cryptographic keys. This improves user experience by eliminating the hassle and security risks associated with key management.
+
+The system efficiently combines two encryption methods:
+
+1. Fast symmetric encryption (AES): Used for data encryption/decryption
+2. Identity-Based Encryption (IBE): Used for secure AES key management
+
+This combination provides the following benefits:
+
+- Fast encryption/decryption processing: Most data is processed using AES
+- Secure key management: AES keys are protected using IBE
+- Simple implementation: Encryption functionality can be implemented with just a few lines of code
+
+Furthermore, this solution works across multiple platforms (iOS/Android/Web) and provides consistent encryption functionality across platforms.
 
 ## Target Users
 
-- Cross-platform developers for Web/Native
-- Developers looking to build applications on Internet Computer Protocol (ICP)
-- Mobile app developers who need to implement secure authentication systems
+- Application developers who want to implement end-to-end encryption
+- Cross-platform app developers who need secure data protection features
+- Projects looking to leverage encryption functionality on Internet Computer Protocol (ICP)
+- Security-focused application developers who want to reduce key management burden
 
 ## Benefits and Features
 
-- Easy implementation of Internet Identity authentication in smartphone native apps, which was previously difficult
-- Use the same library for Internet Identity authentication in both Expo Web and Native
-- Provide consistent authentication experience across multiple platforms (Web/iOS/Android)
-- Simplify the workflow from development environment to deployment
+- Efficient encryption system combining AES and IBE
+  - Fast encryption/decryption processing (AES)
+  - Secure key management (IBE)
+  - Minimal code implementation
+- Multi-platform support
+  - Unified encryption API through expo-crypto-universal
+  - Same code implementation for Web/Native
+  - No platform-specific implementation needed
+  - Consistent encryption functionality across platforms
+- Integration with Internet Identity authentication
+  - Passwordless secure authentication
+  - Automatic key management
 
 ## Implementation Guide
 
-You can implement Internet Identity authentication with these simple steps:
+### 1. Internet Identity Authentication Implementation
+
+You can implement authentication with these simple steps:
 
 1. **Set up Authentication Provider**: Configure the provider in your app entry file
 
@@ -75,66 +99,110 @@ const { logout } = useIIIntegrationContext();
 await logout();
 ```
 
-4. **Backend Integration**: Call backend Canister using authenticated identity
+### 2. AES/IBE Encryption Implementation
+
+After authentication, you can implement encryption functionality with these steps:
+
+1. **Prepare AES Encryption Key**: Initialize the encryption key in your application
 
 ```typescript
-// Call backend Canister in components/WhoAmI.tsx
-import { useIIIntegrationContext } from 'expo-ii-integration';
-import { createBackend } from '@/backend';
+// app/(tabs)/index.tsx
+import { useAesKey, AesProcessingView } from 'expo-aes-vetkeys';
+import { createAesBackend } from '@/backend';
+import { aesRawKeyStorage } from '@/storage';
+import { cryptoModule } from '@/crypto';
 
 const { identity } = useIIIntegrationContext();
+const backend = createAesBackend(identity);
+const { isProcessingAes, aesError } = useAesKey({
+  identity,
+  backend,
+  cryptoModule,
+  aesRawKeyStorage,
+});
 
-const backend = createBackend(identity);
-await backend.whoami();
+if (isProcessingAes) {
+  return <AesProcessingView />;
+}
 ```
+
+2. **Implement Encryption/Decryption**: Implement encryption processing using the prepared key
+
+```typescript
+// components/AesIbeCipher.tsx
+import { aesRawKeyStorage } from '@/storage';
+import { cryptoModule } from '@/crypto';
+
+// Encryption
+const aesRawKey = await aesRawKeyStorage.retrieve();
+const plaintextBytes = new TextEncoder().encode(inputText);
+const ciphertext = await cryptoModule.aesEncryptAsync(
+  plaintextBytes,
+  aesRawKey,
+);
+
+// Decryption
+const decrypted = await cryptoModule.aesDecryptAsync(ciphertext, aesRawKey);
+const result = new TextDecoder().decode(decrypted);
+```
+
+This implementation allows you to achieve secure encryption/decryption functionality using the same code in both Web and Native environments.
 
 ## How We're Using ICP's Mechanisms
 
-- Password-free secure authentication through "Internet Identity (II)"
-  - Compliant with the latest authentication standards using WebAuthn/passkeys
-  - Secure sharing of authentication information across multiple devices
-- Full-stack environment through integration with ICP backend
-  - Automatic authentication integration when calling backend
-  - Full-stack environment without relying on cloud services
-- Backend processing using WebAssembly-based unified execution environment
-  - ICP canisters (backend) running on WebAssembly
-  - Fast and secure server processing
+- Encryption system through vetKeys
+  - IBE-based secure key management
+  - Encryption key generation and management in canisters
+  - Distributed key distribution system
+- Authentication through Internet Identity (II)
+  - Passwordless secure authentication
+  - Access control for encryption keys
+- Integration with ICP backend
+  - Secure communication with the vetKeys system
+  - Secure management of the master key
 
 ## Why We Chose to Develop with ICP and Its Advantages
 
-Traditional passkey authentication systems require server-side implementation. Custom implementation is not only costly but also carries security risks. Using Internet Identity's proven passkey authentication reduces security risks and cuts costs.
-
-Moreover, Internet Identity authentication is integrated with caller authentication for backend Canisters. Not having to implement this yourself offers significant advantages in terms of both security and cost.
+Traditional encryption systems face significant challenges with key management and distribution. Cross-platform support also tends to make implementation complex.
+By combining ICP's vetKeys functionality with Internet Identity, we solve these challenges and achieve the following benefits:
 
 ### Key Benefits
 
-- **Enhanced Security**: Reduce risks by using a proven authentication system
-- **Reduced Development Costs**: Significantly cut costs for implementing and maintaining authentication systems
-- **Improved User Experience**: Provide a secure and simple passwordless authentication experience
-- **Integrated Environment**: Maintain consistent authentication flow from frontend to backend
+- **Enhanced Security**
+  - Secure key management through IBE
+  - Authentication strengthening through Internet Identity integration
+  - Security guarantee through distributed systems
+- **Improved Development Efficiency**
+  - Simple API design
+  - Cross-platform support
+  - Minimal code implementation
+- **Better User Experience**
+  - Fast encryption/decryption processing
+  - Automated key management
+  - Seamless authentication integration
 
 ## Libraries Developed for This Project
 
-- [expo-ii-integration](https://github.com/higayasuo/expo-ii-integration) - Library for accessing Internet Identity from Expo Web/Native
-- [@higayasuo/iframe-messenger](https://github.com/higayasuo/iframe-messenger) - Library for type-safe message communication via iframe
-- [canister-manager](https://github.com/higayasuo/canister-manager) - Library that resolves canister URL issues that depend on the environment
-- [expo-storage-universal](https://github.com/higayasuo/expo-storage-universal) - Base library for unified access to storage from Web/Native
-- [expo-storage-universal-web](https://github.com/higayasuo/expo-storage-universal-web) - Web implementation of expo-storage-universal
-- [expo-storage-universal-native](https://github.com/higayasuo/expo-storage-universal-native) - Native implementation of expo-storage-universal
+- [expo-aes-vetkeys](https://github.com/higayasuo/expo-aes-vetkeys) - Library for easy AES/IBE encryption in Expo Web/Native
+- [vetkeys-client-utils](https://github.com/higayasuo/vetkeys-client-utils) - Library to make ic-vetkd-utils-wasm2js easier to use
+- ic-vetkd-utils-wasm2js - ic-vetkd-utils-0.1.0 wrapped in JavaScript for WASM, which can't be used in Expo, so converted to pure JavaScript using add-wasm2js
+- [add-wasm2js](https://github.com/higayasuo/add-wasm2js) - Library to convert WASM libraries wrapped in JavaScript by wasm-pack to pure JavaScript
+- [expo-crypto-universal](https://github.com/higayasuo/expo-crypto-universal) - Library for using AES with the same interface from Web/Native
+- [expo-crypto-universal-web](https://github.com/higayasuo/expo-crypto-universal-web) - Web implementation of expo-crypto-universal
+- [expo-crypto-universal-native](https://github.com/higayasuo/expo-ctypto-universal-native) - Native implementation of expo-crypto-universal
 
 ## Documentation
 
-- [How it works](docs/how_it_works.md)
 - [Setup guide](docs/setup.md)
 
 ## Repository Commits
 
 You can check the development history of each repository from the links below. Refer to these if you want to track implementation details or change history:
 
-- [expo-icp](https://github.com/higayasuo/expo-icp/commits?author=higayasuo)
-- [expo-ii-integration](https://github.com/higayasuo/expo-ii-integration/commits?author=higayasuo)
-- [@higayasuo/iframe-messenger](https://github.com/higayasuo/iframe-messenger/commits?author=higayasuo)
-- [canister-manager](https://github.com/higayasuo/canister-manager/commits?author=higayasuo)
-- [expo-storage-universal](https://github.com/higayasuo/expo-storage-universal/commits?author=higayasuo)
-- [expo-storage-universal-web](https://github.com/higayasuo/expo-storage-universal-web/commits?author=higayasuo)
-- [expo-storage-universal-native](https://github.com/higayasuo/expo-storage-universal-native/commits?author=higayasuo)
+- [expo-icp-vetkeys](https://github.com/higayasuo/expo-icp-vetkeys/commits?author=higayasuo)
+- [expo-aes-vetkeys](https://github.com/higayasuo/expo-aes-vetkeys/commits?author=higayasuo)
+- [vetkeys-client-utils](https://github.com/higayasuo/vetkeys-client-utils/commits?author=higayasuo)
+- [add-wasm2js](https://github.com/higayasuo/add-wasm2js/commits?author=higayasuo)
+- [expo-crypto-universal](https://github.com/higayasuo/expo-crypto-universal/commits?author=higayasuo)
+- [expo-crypto-universal-web](https://github.com/higayasuo/expo-crypto-universal-web/commits?author=higayasuo)
+- [expo-crypto-universal-native](https://github.com/higayasuo/expo-crypto-universal-native/commits?author=higayasuo)

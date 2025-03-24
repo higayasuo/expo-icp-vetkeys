@@ -5,7 +5,7 @@
 
 ## デモ
 
-<a href="https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/?v=1" target="_blank" rel="noopener noreferrer">https://csbju-6qaaa-aaaag-at7da-cai.icp0.io/</a>
+<a href="https://fpdhi-rqaaa-aaaag-at7ra-cai.icp0.io/" target="_blank" rel="noopener noreferrer">https://fpdhi-rqaaa-aaaag-at7ra-cai.icp0.io/</a>
 (Ctrl+Click or ⌘+Click to open in new tab)
 
 ### スクリーンショット

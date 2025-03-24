@@ -25,5 +25,4 @@ service : {
       VetKDEncryptedKeyReply,
     );
   vetkd_public_key : (VetKDPublicKeyRequest) -> (VetKDPublicKeyReply);
-  whoami : () -> (text) query;
 }

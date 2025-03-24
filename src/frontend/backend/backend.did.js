@@ -38,7 +38,6 @@ export const idlFactory = ({ IDL }) => {
         [VetKDPublicKeyReply],
         [],
       ),
-    'whoami' : IDL.Func([], [IDL.Text], ['query']),
   });
 };
 export const init = ({ IDL }) => { return []; };
