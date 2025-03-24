@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "expo-icp-vetkeys",
+    "scheme": "io.github.higayasuo.expo-icp-vetkeys",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
@@ -15,7 +15,7 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.example.icp-vetkeys",
+      "bundleIdentifier": "io.github.higayasuo.expo-icp-vetkeys",
       "infoPlist": {
         "NSAppTransportSecurity": {
           "NSAllowsArbitraryLoads": true,
@@ -28,7 +28,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.example.icp-vetkeys"
+      "package": "io.github.higayasuo.expo_icp_vetkeys"
     },
     "web": {
       "bundler": "metro",
