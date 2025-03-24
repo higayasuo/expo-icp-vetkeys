@@ -189,7 +189,7 @@ ICP の vetKeys 機能と Internet Identity を組み合わせることで、こ
 - [add-wasm2js](https://github.com/higayasuo/add-wasm2js) - wasm-pack で WASM を JavaScript でラップしているライブラリを pure JavaScript 化するライブラリ
 - [expo-crypto-universal](https://github.com/higayasuo/expo-crypto-universal) - Web/Native から同じインターフェースで AES を使うライブラリ
 - [expo-crypto-universal-web](https://github.com/higayasuo/expo-crypto-universal-web) - expo-crypto-universal の Web 実装
-- [expo-crypto-universal-native](https://github.com/higayasuo/expo-ctypto-universal-native) - expo-crypto-universal の Native 実装
+- [expo-crypto-universal-native](https://github.com/higayasuo/expo-crypto-universal-native) - expo-crypto-universal の Native 実装
 
 ## ドキュメント
 
